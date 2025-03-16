@@ -176,6 +176,13 @@ string Read::toStringWithTag(string tag) {
 	return *mName + " " + tag + "\n" + *mSeq + "\n" + *mStrand + "\n" + *mQuality + "\n";
 }
 
+void Read::tagSE(string tag) {
+	int len = mName->length();
+	string* newName = new string(*mName + tag);
+	delete mName;
+	mName = newName;
+}
+
 bool Read::fixMGI() {
 	int len = mName->length();
 	if((*mName)[len-1]=='1' || (*mName)[len-1]=='2') {

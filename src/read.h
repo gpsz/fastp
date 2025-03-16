@@ -32,6 +32,7 @@ public:
     void convertPhred64To33();
     void trimFront(int len);
     bool fixMGI();
+    void tagSE(string tag);
 
 public:
     static bool test();

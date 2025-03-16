@@ -309,6 +309,8 @@ public:
     string unpaired2;
     // file name of failed reads output
     string failedOut;
+    // tag for SE reads
+    string setag;
     // json file
     string overlappedOut;
     // json file

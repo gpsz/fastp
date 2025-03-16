@@ -226,6 +226,11 @@ bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
             or1->fixMGI();
         }
         
+        // fix MGI
+        if(!mOptions->setag.empty()) {
+            or1->tagSE(mOptions->setag);
+        }
+        
         // umi processing
         if(mOptions->umi.enabled)
             mUmiProcessor->process(or1);

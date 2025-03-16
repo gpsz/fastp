@@ -10,6 +10,7 @@ Options::Options(){
     in2 = "";
     out1 = "";
     out2 = "";
+    setag = "";
     reportTitle = "fastp report";
     thread = 3;
     compression = 4;
@@ -92,6 +93,8 @@ bool Options::validate() {
 
     if(!in2.empty()) {
         check_file_valid(in2);
+        if (!setag.empty())
+            cerr << "setag ignored for PE reads" << endl;
     }
 
     if(merge.enabled) {
