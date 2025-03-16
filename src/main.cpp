@@ -39,6 +39,7 @@ int main(int argc, char* argv[]){
     cmd.add<string>("unpaired2", 0, "for PE input, if read2 passed QC but read1 not, it will be written to unpaired2. If --unpaired2 is same as --unpaired1 (default mode), both unpaired reads will be written to this same file.", false, "");
     cmd.add<string>("overlapped_out", 0, "for each read pair, output the overlapped region if it has no any mismatched base.", false, "");
     cmd.add<string>("failed_out", 0, "specify the file to store reads that cannot pass the filters.", false, "");
+    cmd.add<string>("tag", 0, "append the specified tag to reads name (SE only).", false, "");
     cmd.add("merge", 'm', "for paired-end input, merge each pair of reads into a single read if they are overlapped. The merged reads will be written to the file given by --merged_out, the unmerged reads will be written to the files specified by --out1 and --out2. The merging mode is disabled by default.");
     cmd.add<string>("merged_out", 0, "in the merging mode, specify the file name to store merged output, or specify --stdout to stream the merged output", false, "");
     cmd.add("include_unmerged", 0, "in the merging mode, write the unmerged or unpaired reads to the file specified by --merge. Disabled by default.");
