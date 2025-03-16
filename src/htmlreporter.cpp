@@ -324,6 +324,8 @@ void HtmlReporter::reportDuplication(ofstream& ofs) {
 
 void HtmlReporter::report(FilterResult* result, Stats* preStats1, Stats* postStats1, Stats* preStats2, Stats* postStats2) {
     ofstream ofs;
+    if (mOptions->htmlFile.empty())
+        return;
     ofs.open(mOptions->htmlFile, ifstream::out);
 
     printHeader(ofs);

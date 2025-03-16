@@ -265,10 +265,10 @@ bool Options::validate() {
     }
 
     if(dontOverwrite) {
-        if(file_exists(jsonFile)) {
+        if(!jsonFile.empty() && file_exists(jsonFile)) {
             error_exit(jsonFile + " already exists and you have set to not rewrite output files by --dont_overwrite");
         }
-        if(file_exists(htmlFile)) {
+        if(!htmlFile.empty() && file_exists(htmlFile)) {
             error_exit(htmlFile + " already exists and you have set to not rewrite output files by --dont_overwrite");
         }
     }
