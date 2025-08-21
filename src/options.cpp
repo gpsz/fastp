@@ -10,6 +10,7 @@ Options::Options(){
     in2 = "";
     out1 = "";
     out2 = "";
+    setag = "";
     reportTitle = "fastp report";
     thread = 3;
     compression = 4;
@@ -92,6 +93,8 @@ bool Options::validate() {
 
     if(!in2.empty()) {
         check_file_valid(in2);
+        if (!setag.empty())
+            cerr << "setag ignored for PE reads" << endl;
     }
 
     if(outputToSTDOUT) {
@@ -273,10 +276,10 @@ bool Options::validate() {
     }
 
     if(dontOverwrite) {
-        if(file_exists(jsonFile)) {
+        if(!jsonFile.empty() && file_exists(jsonFile)) {
             error_exit(jsonFile + " already exists and you have set to not rewrite output files by --dont_overwrite");
         }
-        if(file_exists(htmlFile)) {
+        if(!htmlFile.empty() && file_exists(htmlFile)) {
             error_exit(htmlFile + " already exists and you have set to not rewrite output files by --dont_overwrite");
         }
     }

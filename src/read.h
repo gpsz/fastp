@@ -31,6 +31,7 @@ public:
     void resize(int len);
     void convertPhred64To33();
     void trimFront(int len);
+    void tagSE(string tag);
     bool fixMGI();
 
 public:
