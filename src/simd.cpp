@@ -3,8 +3,8 @@
 
 #undef HWY_TARGET_INCLUDE
 #define HWY_TARGET_INCLUDE "src/simd.cpp"
-#include "hwy/foreach_target.h"  // IWYU pragma: keep
-#include "hwy/highway.h"
+#include <hwy/foreach_target.h>  // IWYU pragma: keep
+#include <hwy/highway.h>
 
 HWY_BEFORE_NAMESPACE();
 namespace fastp_simd {
