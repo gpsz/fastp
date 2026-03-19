@@ -24,17 +24,28 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libdeflate-dev nasm
+          sudo apt-get install -y build-essential nasm
 
-      - name: build ISA-L (Ubuntu)
+      - name: build ISA-L static (Ubuntu)
         if: runner.os == 'Linux'
         run: |
           git clone --depth=1 --branch v2.31.1 https://github.com/intel/isa-l.git /tmp/isa-l
           cd /tmp/isa-l
           ./autogen.sh
-          ./configure --prefix=/usr/local
+          ./configure --prefix=/usr/local --enable-static --disable-shared
           make -j$(nproc)
           sudo make install
+
+      - name: build libdeflate static (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          git clone --depth=1 --branch v1.23 https://github.com/ebiggers/libdeflate.git /tmp/libdeflate
+          cd /tmp/libdeflate
+          cmake -B _build -DCMAKE_BUILD_TYPE=Release \
+            -DLIBDEFLATE_BUILD_STATIC_LIB=ON -DLIBDEFLATE_BUILD_SHARED_LIB=OFF \
+            -DLIBDEFLATE_BUILD_GZIP=OFF -DCMAKE_INSTALL_PREFIX=/usr/local
+          cmake --build _build -j$(nproc)
+          sudo cmake --install _build
 
       - name: install dependencies (macOS)
         if: runner.os == 'macOS'
