@@ -30,11 +30,7 @@ SOFTWARE.
 #include "common.h"
 #include <iostream>
 #include <fstream>
-#if __has_include(<libdeflate.h>)
 #include <libdeflate.h>
-#else
-#include "libdeflate.h"
-#endif
 #include "options.h"
 #include <stdio.h>
 
