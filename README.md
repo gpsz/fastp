@@ -4,13 +4,16 @@ https://anaconda.org/bioconda/fastp/badges/version.svg)](https://anaconda.org/bi
 https://anaconda.org/bioconda/fastp/badges/downloads.svg)](https://anaconda.org/bioconda/fastp)
 [![DebianBadge](
 https://badges.debian.net/badges/debian/unstable/fastp/version.svg)](https://packages.debian.org/unstable/fastp)
+[![European Galaxy server](https://img.shields.io/badge/usegalaxy-.eu-brightgreen?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAASCAYAAABB7B6eAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAACC2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjE8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlBob3RvbWV0cmljSW50ZXJwcmV0YXRpb24+MjwvdGlmZjpQaG90b21ldHJpY0ludGVycHJldGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KD0UqkwAAAn9JREFUOBGlVEuLE0EQruqZiftwDz4QYT1IYM8eFkHFw/4HYX+GB3/B4l/YP+CP8OBNTwpCwFMQXAQPKtnsg5nJZpKdni6/6kzHvAYDFtRUT71f3UwAEbkLch9ogQxcBwRKMfAnM1/CBwgrbxkgPAYqlBOy1jfovlaPsEiWPROZmqmZKKzOYCJb/AbdYLso9/9B6GppBRqCrjSYYaquZq20EUKAzVpjo1FzWRDVrNay6C/HDxT92wXrAVCH3ASqq5VqEtv1WZ13Mdwf8LFyyKECNbgHHAObWhScf4Wnj9CbQpPzWYU3UFoX3qkhlG8AY2BTQt5/EA7qaEPQsgGLWied0A8VKrHAsCC1eJ6EFoUd1v6GoPOaRAtDPViUr/wPzkIFV9AaAZGtYB568VyJfijV+ZBzlVZJ3W7XHB2RESGe4opXIGzRTdjcAupOK09RA6kzr1NTrTj7V1ugM4VgPGWEw+e39CxO6JUw5XhhKihmaDacU2GiR0Ohcc4cZ+Kq3AjlEnEeRSazLs6/9b/kh4eTC+hngE3QQD7Yyclxsrf3cpxsPXn+cFdenF9aqlBXMXaDiEyfyfawBz2RqC/O9WF1ysacOpytlUSoqNrtfbS642+4D4CS9V3xb4u8P/ACI4O810efRu6KsC0QnjHJGaq4IOGUjWTo/YDZDB3xSIxcGyNlWcTucb4T3in/3IaueNrZyX0lGOrWndstOr+w21UlVFokILjJLFhPukbVY8OmwNQ3nZgNJNmKDccusSb4UIe+gtkI+9/bSLJDjqn763f5CQ5TLApmICkqwR0QnUPKZFIUnoozWcQuRbC0Km02knj0tPYx63furGs3x/iPnz83zJDVNtdP3QAAAABJRU5ErkJggg==)](https://usegalaxy.eu/root?tool_id=fastp)
 
 # fastp
 A tool designed to provide ultrafast all-in-one preprocessing and quality control for FastQ data.     
 
 This tool is designed for processing short reads (i.e. Illumina NovaSeq, MGI), if you are looking for tools to process long reads (i.e. Nanopore, PacBio, Cyclone), please use [fastplong](https://github.com/OpenGene/fastplong).  
 
-fastp supports batch processing of multiple FASTQ files in a folder, see - [batch processing](#batch-processing)
+fastp supports batch processing of multiple FASTQ files in a folder, see - [batch processing](#batch-processing)  
+
+If you use fastp in your work, you can cite fastp as:  *Shifu Chen. fastp 1.0: An ultra-fast all-round tool for FASTQ data quality control and preprocessing. iMeta 4.5 (2025): e70078*
 
 
 - [features](#features)
@@ -21,8 +24,9 @@ fastp supports batch processing of multiple FASTQ files in a folder, see - [batc
   - [or download the latest prebuilt binary for Linux users](#or-download-the-latest-prebuilt-binary-for-linux-users)
   - [or compile from source](#or-compile-from-source)
     - [Step 1: install isa-l](#step-1-install-isa-l)
-    - [step 2: install libdeflate](#step-2-install-libdeflate)
-    - [Step 3: download and build fastp](#step-3-download-and-build-fastp)
+    - [Step 2: install libdeflate](#step-2-install-libdeflate)
+    - [Step 3: install highway](#step-3-install-highway)
+    - [Step 4: download and build fastp](#step-4-download-and-build-fastp)
 - [input and output](#input-and-output)
   - [output to STDOUT](#output-to-stdout)
   - [input from STDIN](#input-from-stdin)
@@ -114,13 +118,19 @@ mv fastp.0.23.4 fastp
 chmod a+x ./fastp
 ```
 ## or compile from source
-`fastp` depends on `libdeflate` and `libisal`, while `libisal` is not compatible with gcc 4.8. If you use gcc 4.8, your fastp will fail to run. Please upgrade your gcc before you build the libraries and fastp.
+`fastp` depends on `libisal`, `libdeflate` and `libhwy` (Google Highway >= 1.1.0). Please install all three before building.
+
+You can install all dependencies at once with conda:
+```shell
+conda install -c conda-forge isa-l libdeflate libhwy
+```
+
+Or install them individually using your system package manager:
 
 ### Step 1: install isa-l
-It's recommended that to install it using your package manager, for example `apt install isa-l` on ubuntu, or `brew install isa-l` on Mac. Otherwise you can compile it from source. Please be noted that `isa-l` is not compatible with gcc 4.8 or older versions. See https://github.com/intel/isa-l
-`autoconf`, `automake`, `libtools`, `nasm (>=2.11.01)` and `yasm (>=1.2.0)` are required to build isa-l.
+Install via `brew install isa-l` (macOS) or `apt install libisal-dev` (Ubuntu, dynamic linking only). Note: Ubuntu's `libisal-dev` does not ship a static library (`.a`). For static linking, compile from source (requires `nasm`, `autoconf`, `automake`, `libtool`):
 ```shell
-git clone https://github.com/intel/isa-l.git
+git clone --depth=1 --branch v2.31.0 https://github.com/intel/isa-l.git
 cd isa-l
 ./autogen.sh
 ./configure --prefix=/usr --libdir=/usr/lib64
@@ -128,17 +138,27 @@ make -j
 sudo make install
 ```
 
-### step 2: install libdeflate
-It's recommended that to install it using your package manager, for example `apt install libdeflate` on ubuntu, or `brew install libdeflate` on Mac. Otherwise you can compile it from source. See https://github.com/ebiggers/libdeflate
+### Step 2: install libdeflate
+Install via package manager: `apt install libdeflate-dev` (Ubuntu) or `brew install libdeflate` (macOS). Or compile from source:
 ```shell
 git clone https://github.com/ebiggers/libdeflate.git
 cd libdeflate
 cmake -B build
 cmake --build build
-cmake --install build
+sudo cmake --install build
 ```
 
-### Step 3: download and build fastp
+### Step 3: install Highway
+[Google Highway](https://github.com/google/highway) (>= 1.1.0) provides portable SIMD acceleration. Install via `brew install highway` (macOS) or `conda install -c conda-forge libhwy`. Note: `apt install libhwy-dev` on Ubuntu 24.04 provides 1.0.7 which is too old — compile from source instead:
+```shell
+git clone --depth=1 --branch 1.3.0 https://github.com/google/highway.git
+cd highway
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DHWY_ENABLE_TESTS=OFF -DHWY_ENABLE_EXAMPLES=OFF
+cmake --build build
+sudo cmake --install build
+```
+
+### Step 4: download and build fastp
 ```shell
 # get source (you can also use browser to download from master or releases)
 git clone https://github.com/OpenGene/fastp.git
@@ -149,6 +169,11 @@ make -j
 
 # Install
 sudo make install
+```
+
+On macOS with Homebrew, you may need to specify the include and library paths:
+```shell
+make -j INCLUDE_DIRS=/opt/homebrew/include LIBRARY_DIRS=/opt/homebrew/lib
 ```
 
 # input and output
@@ -164,6 +189,7 @@ sudo make install
 ## input from STDIN
 * specify `--stdin` if you want to read the STDIN for processing.
 * if the STDIN is an interleaved paired-end stream, specify `--interleaved_in` to indicate that.
+* adapter auto-detection is disabled for STDIN mode
 ## store the unpaired reads for PE data
 * you can specify `--unpaired1` to store the reads that read1 passes filters but its paired read2 doesn't, as well as `--unpaired2` for unpaired read2.
 * `--unpaired1` and `--unpaired2` can be the same, so the unpaired read1/read2 will be written to the same single file.
@@ -416,7 +442,7 @@ options:
       --include_unmerged               in the merging mode, write the unmerged or unpaired reads to the file specified by --merge. Disabled by default.
   -6, --phred64                      indicate the input is using phred64 scoring (it'll be converted to phred33, so the output will still be phred33)
   -z, --compression                  compression level for gzip output (1 ~ 9). 1 is fastest, 9 is smallest, default is 4. (int [=4])
-      --stdin                          input from STDIN. If the STDIN is interleaved paired-end FASTQ, please also add --interleaved_in.
+      --stdin                          input from STDIN. If the STDIN is interleaved paired-end FASTQ, please also add --interleaved_in. Adapter auto-detection is disabled for STDIN mode
       --stdout                         output passing-filters reads to STDOUT. This option will result in interleaved FASTQ output for paired-end input. Disabled by default.
       --interleaved_in                 indicate that <in1> is an interleaved FASTQ which contains both read1 and read2. Disabled by default.
       --reads_to_process             specify how many reads/pairs to be processed. Default 0 means process all reads. (int [=0])
@@ -523,6 +549,7 @@ options:
 ```
 
 # citations
+### Shifu Chen. 2025. fastp 1.0: An ultra-fast all-round tool for FASTQ data quality control and preprocessing. iMeta 2025: [https://doi.org/10.1002/imt2.107](https://doi.org/10.1002/imt2.70078)
 ### Shifu Chen. 2023. Ultrafast one-pass FASTQ data preprocessing, quality control, and deduplication using fastp. iMeta 2: e107. https://doi.org/10.1002/imt2.107
 ### Shifu Chen, Yanqing Zhou, Yaru Chen, Jia Gu; fastp: an ultra-fast all-in-one FASTQ preprocessor, Bioinformatics, Volume 34, Issue 17, 1 September 2018, Pages i884–i890, https://doi.org/10.1093/bioinformatics/bty560
 

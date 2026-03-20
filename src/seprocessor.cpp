@@ -194,8 +194,9 @@ void SingleEndProcessor::recycleToPool(int tid, Read* r) {
 }
 
 bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
-    string* outstr = new string();
-    string* failedOut = new string();
+    // build output on stack strings, move to heap only when handing off to writers
+    string outstr, failedOut;
+    outstr.reserve(pack->count * 320);
     int tid = config->getThreadId();
 
     int readPassed = 0;
@@ -225,7 +226,7 @@ bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
         if(mOptions->fixMGI) {
             or1->fixMGI();
         }
-        
+
         // set tag
         if(!mOptions->setag.empty()) {
             or1->tagSE(mOptions->setag);
@@ -244,13 +245,20 @@ bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
                 PolyX::trimPolyG(r1, config->getFilterResult(), mOptions->polyGTrim.minLen);
         }
 
+        bool isAdapterDimer = false;
         if(r1 != NULL && mOptions->adapter.enabled){
             bool trimmed = false;
             if(mOptions->adapter.hasSeqR1)
                 trimmed = AdapterTrimmer::trimBySequence(r1, config->getFilterResult(), mOptions->adapter.sequence, false);
             bool incTrimmedCounter = !trimmed;
             if(mOptions->adapter.hasFasta) {
-                AdapterTrimmer::trimByMultiSequences(r1, config->getFilterResult(), mOptions->adapter.seqsInFasta, false, incTrimmedCounter);
+                trimmed |= AdapterTrimmer::trimByMultiSequences(r1, config->getFilterResult(), mOptions->adapter.seqsInFasta, false, incTrimmedCounter);
+            }
+
+            // Check for adapter dimer: read shorter than threshold after adapter trimming
+            // AND adapter was detected (requires evidence)
+            if(r1 != NULL && trimmed && r1->length() <= mOptions->adapter.dimerMaxLen) {
+                isAdapterDimer = true;
             }
         }
 
@@ -266,17 +274,20 @@ bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
 
         int result = mFilter->passFilter(r1);
 
+        if(isAdapterDimer)
+            result = FAIL_ADAPTER_DIMER;
+
         config->addFilterResult(result, 1);
 
         if(!dedupOut) {
             if( r1 != NULL &&  result == PASS_FILTER) {
-                r1->appendToString(outstr);
+                r1->appendToString(&outstr);
 
                 // stats the read after filtering
                 config->getPostStats1()->statRead(r1);
                 readPassed++;
             } else if(mFailedWriter) {
-                or1->appendToStringWithTag(failedOut, FAILED_TYPES[result]);
+                or1->appendToStringWithTag(&failedOut, FAILED_TYPES[result]);
             }
         }
 
@@ -290,16 +301,13 @@ bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
         // split output by each worker thread
         if(!mOptions->out1.empty())
             config->getWriter1()->writeString(outstr);
-    } 
+    }
 
     if(mLeftWriter) {
-        mLeftWriter->input(tid, outstr);
-        outstr = NULL;
+        mLeftWriter->input(tid, new string(std::move(outstr)));
     }
     if(mFailedWriter) {
-        // write failed data
-        mFailedWriter->input(tid, failedOut);
-        failedOut = NULL;
+        mFailedWriter->input(tid, new string(std::move(failedOut)));
     }
 
     if(mOptions->split.byFileLines)
@@ -307,10 +315,7 @@ bool SingleEndProcessor::processSingleEnd(ReadPack* pack, ThreadConfig* config){
     else
         config->markProcessed(pack->count);
 
-    if(outstr)
-        delete outstr;
-    if(failedOut)
-        delete failedOut;
+    // stack strings auto-cleanup - no manual delete needed
 
     delete pack->data;
     delete pack;
@@ -443,7 +448,7 @@ void SingleEndProcessor::processorTask(ThreadConfig* config)
             usleep(100);
         }
     }
-    input->setConsumerFinished();        
+    input->setConsumerFinished();
 
     mFinishedThreads++;
     if(mFinishedThreads == mOptions->thread) {

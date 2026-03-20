@@ -31,7 +31,7 @@ SOFTWARE.
 #include "common.h"
 #include <iostream>
 #include <fstream>
-#include "igzip_lib.h"
+#include <isa-l/igzip_lib.h>
 #include "readpool.h"
 
 class FastqReader{
@@ -91,7 +91,8 @@ public:
 	FastqReaderPair(FastqReader* left, FastqReader* right);
 	FastqReaderPair(string leftName, string rightName, bool hasQuality = true, bool phred64 = false, bool interleaved = false);
 	~FastqReaderPair();
-	ReadPair* read();
+	void read(ReadPair* pair);
+	bool eof();
 public:
 	FastqReader* mLeft;
 	FastqReader* mRight;

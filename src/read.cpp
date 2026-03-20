@@ -118,58 +118,30 @@ string Read::toString() {
 
 void Read::appendToString(string* target) {
 	size_t size = mName->length() + mSeq->length() + mStrand->length() + mQuality->length() + 4;
-	char* str = new char[size + 1];
-	size_t total = 0;
-	memcpy(str + total, mName->data(), mName->length());
-	total +=  mName->length();
-	str[total] = '\n';
-	total++;
-	memcpy(str + total, mSeq->data(), mSeq->length());
-	total +=  mSeq->length();
-	str[total] = '\n';
-	total++;
-	memcpy(str + total, mStrand->data(), mStrand->length());
-	total +=  mStrand->length();
-	str[total] = '\n';
-	total++;
-	memcpy(str + total, mQuality->data(), mQuality->length());
-	total +=  mQuality->length();
-	str[total] = '\n';
-	total++;
-	str[total] = '\0';
-
-	target->append(str, size);
-	delete[] str;
+	target->reserve(target->size() + size);
+	target->append(*mName);
+	target->push_back('\n');
+	target->append(*mSeq);
+	target->push_back('\n');
+	target->append(*mStrand);
+	target->push_back('\n');
+	target->append(*mQuality);
+	target->push_back('\n');
 }
 
 void Read::appendToStringWithTag(string* target, string tag) {
 	size_t size = mName->length() + 1 + tag.length() + mSeq->length() + mStrand->length() + mQuality->length() + 4;
-	char* str = new char[size + 1];
-	size_t total = 0;
-	memcpy(str + total, mName->data(), mName->length());
-	total +=  mName->length();
-	str[total] = ' ';
-	total++;
-	memcpy(str + total, tag.data(), tag.length());
-	total +=  tag.length();
-	str[total] = '\n';
-	total++;
-	memcpy(str + total, mSeq->data(), mSeq->length());
-	total +=  mSeq->length();
-	str[total] = '\n';
-	total++;
-	memcpy(str + total, mStrand->data(), mStrand->length());
-	total +=  mStrand->length();
-	str[total] = '\n';
-	total++;
-	memcpy(str + total, mQuality->data(), mQuality->length());
-	total +=  mQuality->length();
-	str[total] = '\n';
-	total++;
-	str[total] = '\0';
-
-	target->append(str, size);
-	delete[] str;
+	target->reserve(target->size() + size);
+	target->append(*mName);
+	target->push_back(' ');
+	target->append(tag);
+	target->push_back('\n');
+	target->append(*mSeq);
+	target->push_back('\n');
+	target->append(*mStrand);
+	target->push_back('\n');
+	target->append(*mQuality);
+	target->push_back('\n');
 }
 
 string Read::toStringWithTag(string tag) {
@@ -205,9 +177,9 @@ bool Read::test(){
 	return idx == "GGTCCCGA";
 }
 
-ReadPair::ReadPair(Read* left, Read* right){
-	mLeft = left;
-	mRight = right;
+ReadPair::ReadPair(){
+	mLeft = NULL;
+	mRight = NULL;
 }
 
 ReadPair::~ReadPair(){
@@ -219,6 +191,15 @@ ReadPair::~ReadPair(){
 		delete mRight;
 		mRight = NULL;
 	}
+}
+
+void ReadPair::setPair(Read* left, Read* right){
+	mLeft = left;
+	mRight = right;
+}
+
+bool ReadPair::eof(){
+	return mLeft == NULL || mRight == NULL;
 }
 
 Read* ReadPair::fastMerge(){
@@ -305,7 +286,8 @@ bool ReadPair::test(){
 		new string("+"),
 		new string("AAAAA6EEEEE/EEEEEEEEEEE#EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEAEEEAEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"));
 
-	ReadPair pair(left, right);
+	ReadPair pair;
+	pair.setPair(left, right);
 	Read* merged = pair.fastMerge();
 	if(merged == NULL)
 		return false;
