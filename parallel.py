@@ -92,7 +92,8 @@ def processDir(folder, options):
             opt = copy.copy(options)
             read1 = path
             opt.read1_file = read1
-            read2 = read1.replace(read1name, read2name)
+            dirn, basen = os.path.dirname(read1), os.path.basename(read1)
+            read2 = os.path.join(dirn, basen.replace(read1name, read2name))        
             if os.path.exists(read2):
                 opt.read2_file = read2
                 processed.add(read2)
